@@ -1,0 +1,15 @@
+{{ set(this, 'title', 'Auth') }}
+{{ use('yii/widgets/ActiveForm') }}
+{% set form = active_form_begin() %}
+<div class="row">
+    <div class="col-xs-4 col-xs-offset-4">
+        {{ form.field(model, 'username') | raw }}
+        {{ form.field(model, 'password').passwordInput | raw }}
+        {{ form.field(model, 'rememberMe').checkbox | raw }}
+
+        <div class="form-group">
+            <input type="submit" value="Login" class="btn btn-primary" />
+        </div>
+    </div>
+</div>
+{{ active_form_end() }}

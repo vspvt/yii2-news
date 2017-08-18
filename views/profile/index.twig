@@ -1,0 +1,18 @@
+{{ set(this, 'title', 'User Profile') }}
+{% if app.session.hasFlash('success') %}
+    <div class="alert alert-success">{{ app.session.getFlash('success') }}</div>
+{% endif %}
+{{ use('yii/widgets/ActiveForm') }}
+{% set form = active_form_begin() %}
+<div class="row">
+    <div class="col-xs-6 col-xs-offset-3 col-xs-pull-3">
+        <h2>Notification settings</h2>
+        {{ form.field(app.user.identity, 'notificationTypes').checkboxList(app.user.identity.notificationTypesAll) | raw }}
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+        {{ active_form_end() }}
+    </div>
+</div>
+<hr>
+{{ pager }}

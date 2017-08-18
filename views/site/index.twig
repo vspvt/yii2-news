@@ -1,0 +1,15 @@
+{{ set(this, 'title', 'News') }}
+
+<div class="row">
+{% for item in model.all %}
+<div class="post-preview col-xs-6">
+    <h2 class="post-title">{{ item.title }} <small style="display: block">{{ item.created_at|date('d.m.Y H:i:s') }}</small></h2>
+    <p class="post-subtitle">
+        {{ item.description }}
+        <a href="{{ url('news/view?id=' ~ item.id) }}">Show more...</a>
+    </p>
+</div>
+{% endfor %}
+</div>
+<hr>
+{{ pager|raw }}

@@ -1,0 +1,82 @@
+{{ register_asset_bundle('app/assets/AppAsset') }}
+{{ void(this.beginPage()) }}
+<!DOCTYPE html>
+<html lang="{{ app.language }}">
+<head>
+    <meta charset="{{ app.charset }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{ html.csrfMetaTags | raw }}
+    <title>{{ html.encode(this.title) }}</title>
+    {{   void(this.head) }}
+    <link href="{{ url('css/clean-blog.min.css') }}" rel="stylesheet">
+</head>
+<body>
+{{ void(this.beginBody()) }}
+{{ nav_bar_begin({
+    'brandLabel': 'Главная',
+    'brandUrl': app.homeUrl,
+    'options': {
+        'class': 'navbar navbar-default navbar-custom navbar-fixed-top'
+    }
+}) }}
+
+{% if app.user.isGuest %}
+    {% set menuItems = [
+        {'label': 'Вход', 'url': url('login')},
+        {'label': 'Регистрация', 'url': url('registration')}
+    ] %}
+{% else %}
+    {% set menuItems = [
+        {'label': 'Профиль (' ~ app.user.identity.username ~ ')', 'url': url('profile')},
+        {'label': 'Выйти', 'url': url('login/out')}
+    ] %}
+{% endif %}
+
+{{ nav_widget({
+    'options': {
+        'class': 'navbar-nav navbar-right',
+    },
+    'items': menuItems
+}) }}
+{{ nav_bar_end() }}
+
+<header class="intro-header" style="background-image: url(/img/header-bg.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading">
+                    <h1>Title <small>subtext</small></h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            {{ content | raw }}
+        </div>
+    </div>
+</div>
+
+<hr>
+
+<footer class="footer">
+    <div class="container">
+        <p class="pull-left">&copy; My Company {{ 'now'|date('Y') }}</p>
+        <p class="pull-right">{{ Yii.powered() | raw }}</p>
+    </div>
+</footer>
+
+{{ void(this.endBody()) }}
+<div id="alerts"></div>
+{% if not app.user.isGuest %}
+    <script>
+        window.userId = '{{ app.user.identity.id }}';
+    </script>
+    <script src="{{ url('js/sse.js') }}"></script>
+{% endif %}
+</body>
+</html>
+{{ void(this.endPage()) }}

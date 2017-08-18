@@ -1,0 +1,5 @@
+{{ set(this, 'title', model.title) }}
+
+<h1>{{ model.title }}</h1>
+<div>{{ model.text }}</div>
+<small>Created at: {{ model.created_at|date('d.m.Y H:i:s') }}</small>

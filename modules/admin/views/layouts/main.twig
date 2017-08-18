@@ -1,0 +1,66 @@
+{{ register_asset_bundle('app/assets/AppAsset') }}
+{{ void(this.beginPage()) }}
+<!DOCTYPE html>
+<html lang="{{ app.language }}">
+<head>
+    <meta charset="{{ app.charset }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{ html.csrfMetaTags | raw }}
+    <title>{{ html.encode(this.title) }}</title>
+    {{   void(this.head) }}
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+{{ void(this.beginBody()) }}
+
+{{ nav_bar_begin({
+    'brandLabel': 'Admin Panel',
+    'brandUrl': url('admmin'),
+    'options': {
+        'class': ''
+    }
+}) }}
+{{ nav_widget({
+    'options': {
+        'class': 'nav navbar-nav',
+    },
+    'items': [
+        {'label': 'Users', 'url': url('admin/user'), 'options': {'class': app.controller.id == 'user' ? 'active' : ''}},
+        {'label': 'News', 'url': url('admin/news'), 'options': {'class': app.controller.id == 'news' ? 'active' : ''}},
+    ],
+}) }}
+{{ nav_widget({
+    'options': {
+        'class': 'navbar-nav navbar-right',
+    },
+    'items': [
+        {'label': 'Site', 'url': app.homeUrl},
+        app.user.isGuest
+        ? {'label': 'Login', 'url': url('login')}
+        : {'label': 'Logout', 'url': url('login/out')}
+    ],
+}) }}
+{{ nav_bar_end() }}
+
+<div class="wrap">
+    <div class="container" style="padding-top: 0">
+        <div class="row">
+            <div class="col-sm-12">
+                {{ content | raw }}
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+{{ void(this.endBody()) }}
+<script src="{{ url('js/admin.js') }}"></script>
+</body>
+</html>
+{{ void(this.endPage()) }}
